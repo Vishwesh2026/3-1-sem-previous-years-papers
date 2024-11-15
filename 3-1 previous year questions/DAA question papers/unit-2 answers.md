@@ -127,3 +127,98 @@ The Divide and Conquer approach is a powerful technique in algorithm design. By 
 Divide and Conquer is structured in three main steps: Divide, Conquer, and Combine. The problem is divided into smaller subproblems, which are solved recursively, and their solutions are combined to form the final solution.
 The provided pseudocode shows a high-level recursive structure for applying divide and conquer to problems.
 Time complexity is discussed with the help of recurrence relations, and the example of Merge Sort illustrates how divide and conquer can be analyzed and optimized.
+
+
+# Trace the quick sort algorithm to sort the list C, O, L, L, E, G, E in alphabetical order. 
+
+# Quick Sort Algorithm Trace
+
+## Initial List
+
+The initial list of characters to sort is:
+C, O, L, L, E, G, E
+
+
+### Step 1: Choose a Pivot
+In the Quick Sort algorithm, we select a pivot element. For this trace, let's assume we are using the **last element** of the list as the pivot. 
+
+- Pivot: `E`
+
+### Step 2: Partitioning the List
+We partition the list into two parts:
+- One part with elements smaller than or equal to the pivot.
+- Another part with elements greater than the pivot.
+
+We rearrange the list around the pivot:
+
+1. Start with `C, O, L, L, E, G, E`
+2. Compare each element to the pivot `E`:
+    - `C` is less than `E`, so it stays in the left part.
+    - `O` is greater than `E`, so it stays in the right part.
+    - `L` is less than `E`, so it stays in the left part.
+    - `L` is less than `E`, so it stays in the left part.
+    - `E` is equal to the pivot, so it stays in its place.
+    - `G` is less than `E`, so it stays in the left part.
+    - `E` is the pivot, so it stays in place.
+
+Rearrange the list:
+C, O, L, L, E, G, E
+
+
+The partitioning process results in the pivot being placed in its final sorted position:
+C, E, L, L, E, G, O
+
+
+Now the pivot `E` is in its correct position.
+
+### Step 3: Recursively Apply Quick Sort
+
+We now apply Quick Sort to the two sublists:
+- Left sublist: `C, E, L, L`
+- Right sublist: `G, O`
+
+### Step 4: Sorting the Left Sublist: `C, E, L, L`
+
+1. **Choose a pivot**: The last element `L` is selected as the pivot.
+2. Partition the list around the pivot `L`:
+    - `C` is less than `L`, so it stays in the left part.
+    - `E` is less than `L`, so it stays in the left part.
+    - `L` is equal to the pivot, so it stays in its place.
+    - `L` is the pivot, so it stays in place.
+
+Rearrange the list:
+C, E, L, L
+
+The pivot `L` is placed in its final sorted position:
+
+C, E, L, L
+
+
+### Step 5: Sorting the Right Sublist: `G, O`
+
+1. **Choose a pivot**: The last element `O` is selected as the pivot.
+2. Partition the list around the pivot `O`:
+    - `G` is less than `O`, so it stays in the left part.
+    - `O` is the pivot, so it stays in its place.
+
+Rearrange the list:
+
+G, O
+
+
+The pivot `O` is placed in its final sorted position:
+
+G, O
+
+
+### Step 6: Final Sorted List
+
+After recursively sorting both sublists and combining the results, we obtain the final sorted list:
+C, E, E, G, L, L, O
+
+
+## Conclusion
+
+The Quick Sort algorithm successfully sorted the list `C, O, L, L, E, G, E` into alphabetical order:
+
+C, E, E, G, L, L, O
