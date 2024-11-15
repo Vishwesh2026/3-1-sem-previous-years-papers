@@ -48,23 +48,60 @@ Consider **Merge Sort** as an example:
 
 ### Pseudocode for Divide and Conquer Approach
 
-```python
-def divide_and_conquer(problem):
-    # Base case: If problem is small enough, solve it directly
-    if is_base_case(problem):
-        return solve_base_case(problem)
-    
-    # Divide the problem into subproblems
-    subproblems = divide(problem)
-    
-    # Conquer each subproblem recursively
-    results = []
-    for subproblem in subproblems:
-        results.append(divide_and_conquer(subproblem))
-    
-    # Combine the results of subproblems
-    return combine(results)
-```
+With Divide and Conquer (recursion)
+
+Algorithm BinSrch(a,i,l,x) {
+
+// Given an array a[I:l] of elements in non decreasing order, 1≤ i ≤ l,
+
+// determine whether x is //present and if so, return j such that x =a[j]; else return 0.
+
+if (l=i) then { // if Small(P)
+
+if (x=a(i)) then return i; else return 0;
+
+ }
+ 
+else {
+
+// Reduce P into a smaller subproblem.
+
+mid :=[(i + l)/2 ];
+
+if (x=a[mid]) then return mid;
+
+else if (x<a[mid] then
+
+return BinSrch (a,i, mid -1,x);
+
+else return BinSrch (a, mid +1,l,x);
+
+ }
+ 
+}
+
+Iterative Binary Search (non-recursive)
+
+Algorithm BinSearch (a,n,x) {
+
+ low :=1;high :=n;
+ 
+ while (low ≤ high) do {
+ 
+ mid :=(low +high)/2;
+ 
+ if ( x<a[mid]) then high :=mid – 1;
+ 
+ else if (x>a[mid]) then low :=mid + 1;
+ 
+ else return mid;
+ 
+}
+
+ return 0;
+ 
+ }
+
 ## Time Complexity Analysis
 
 In Divide and Conquer algorithms, the time complexity is typically expressed using the recurrence relation. For example, in the case of Merge Sort, the recurrence relation for time complexity is:
