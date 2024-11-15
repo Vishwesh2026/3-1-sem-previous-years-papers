@@ -48,59 +48,80 @@ Consider **Merge Sort** as an example:
 
 ### Pseudocode for Divide and Conquer Approach
 
-With Divide and Conquer (recursion)
+Algorithm MergeSort(low, high) {
 
-Algorithm BinSrch(a,i,l,x) {
-
-// Given an array a[I:l] of elements in non decreasing order, 1≤ i ≤ l,
-
-// determine whether x is //present and if so, return j such that x =a[j]; else return 0.
-
-if (l=i) then { // if Small(P)
-
-if (x=a(i)) then return i; else return 0;
-
- }
+ // Small(P) is true if there is only one element to sort .
  
-else {
-
-// Reduce P into a smaller subproblem.
-
-mid :=[(i + l)/2 ];
-
-if (x=a[mid]) then return mid;
-
-else if (x<a[mid] then
-
-return BinSrch (a,i, mid -1,x);
-
-else return BinSrch (a, mid +1,l,x);
-
+ // In this case the list is already sorted.
+ 
+ if (low < high) then {
+ 
+ //If there are more than one element
+ 
+ //Divide P into subproblems.
+ 
+ mid := [(low + high)/2] ;
+ 
+ // Solve the subproblems.
+ 
+ MergeSort(low, mid);
+ 
+ MergeSort (mid + 1, high);
+ 
+ // Combine the solutions.
+ 
+ Merge(low, mid, high);
+ 
  }
  
 }
 
-Iterative Binary Search (non-recursive)
+Merging in Merge Sort
 
-Algorithm BinSearch (a,n,x) {
+Algorithm Merge (low, mid, high) {
 
- low :=1;high :=n;
+ // a[low:high] is a global array containing two sorted subsets in
  
- while (low ≤ high) do {
+ // a [low:mid] and in a [mid + 1 :high]. The goal is to merge these
  
- mid :=(low +high)/2;
+ // two sets into a single set residing in a [low:high]. B[] is an
  
- if ( x<a[mid]) then high :=mid – 1;
+ // auxiliary global array.
  
- else if (x>a[mid]) then low :=mid + 1;
+ h:=low; i:=low ; j : =mid +1;
+
+ while ((h≤ mid) and ( j≤high)) do {
  
- else return mid;
+ if (a[h]≤a[j] then {
+ 
+ b[i] := a[h];h :=h+1;
+ 
+ }
+ 
+ else {
+ 
+ b[i] := a[j];j :=j+1;
+ 
+ }
+ 
+ i:= i+1;
+ 
+ }
+ 
+ if ( h>mid) then
+ 
+ for k:=j to high do
+ 
+ { b[i] : =a[k]; i:=i+1; }
+ 
+ else for k :=h to mid do
+ 
+ { b[i] := a[k]; i:= i+1; }
+ 
+ for k: =low to high do a[k] :=b[k];
  
 }
 
- return 0;
- 
- }
 
 ## Time Complexity Analysis
 
@@ -222,3 +243,199 @@ C, E, E, G, L, L, O
 The Quick Sort algorithm successfully sorted the list `C, O, L, L, E, G, E` into alphabetical order:
 
 C, E, E, G, L, L, O
+
+
+### What is minimum spanning tree? Explain the Kruskal’salgorithm to find the minimum spanning by taking an illustrative graph 
+
+# Minimum Spanning Tree (MST)
+
+## What is a Minimum Spanning Tree?
+
+A **Minimum Spanning Tree (MST)** of a weighted, connected, and undirected graph is a subset of the edges that:
+1. Connects all the vertices in the graph.
+2. Forms a tree (no cycles).
+3. Has the minimum total edge weight compared to any other spanning tree of the graph.
+
+### Applications of MST
+- Designing network infrastructures like telecommunication and electrical grids.
+- Approximation algorithms for NP-hard problems.
+- Clustering in machine learning.
+
+---
+
+# Kruskal's Algorithm
+
+## Introduction
+
+**Kruskal's Algorithm** is a greedy algorithm to find the Minimum Spanning Tree of a graph. It sorts all edges by weight and repeatedly adds the smallest edge to the MST, ensuring no cycles are formed.
+
+### Steps in Kruskal's Algorithm
+1. **Sort Edges**: Sort all edges of the graph in non-decreasing order of their weights.
+2. **Initialize MST**: Start with an empty Minimum Spanning Tree (MST).
+3. **Pick Edges**: Iteratively pick the smallest edge. Add it to the MST if it does not form a cycle with the edges already in the MST.
+4. **Stop Condition**: Repeat step 3 until the MST contains \( V - 1 \) edges, where \( V \) is the number of vertices in the graph.
+
+---
+
+## Example: Illustrative Graph
+
+### Given Graph
+
+Consider the following graph:
+
+- **Vertices**: {A, B, C, D, E}
+- **Edges and Weights**:
+  - A-B: 4
+  - A-C: 2
+  - B-C: 1
+  - B-D: 5
+  - C-D: 8
+  - C-E: 10
+  - D-E: 2
+
+### Step-by-Step Execution
+
+#### Step 1: Sort Edges by Weight
+| Edge   | Weight |
+|--------|--------|
+| B-C    | 1      |
+| A-C    | 2      |
+| D-E    | 2      |
+| A-B    | 4      |
+| B-D    | 5      |
+| C-D    | 8      |
+| C-E    | 10     |
+
+#### Step 2: Initialize MST
+MST starts as an empty set: `MST = {}`.
+
+#### Step 3: Pick Edges and Check for Cycles
+
+1. Pick **B-C (1)**:
+   - MST: `{B-C}`
+   - No cycle.
+
+2. Pick **A-C (2)**:
+   - MST: `{B-C, A-C}`
+   - No cycle.
+
+3. Pick **D-E (2)**:
+   - MST: `{B-C, A-C, D-E}`
+   - No cycle.
+
+4. Pick **A-B (4)**:
+   - MST: `{B-C, A-C, D-E, A-B}`
+   - No cycle.
+
+5. Skip **B-D (5)**, **C-D (8)**, and **C-E (10)**:
+   - Adding any of these would form a cycle.
+
+#### Step 4: Final MST
+The MST is `{B-C, A-C, D-E, A-B}`.
+
+#### Total Weight of MST
+\[
+\text{Total Weight} = 1 + 2 + 2 + 4 = 9
+\]
+
+---
+
+## Visualization
+
+### Initial Graph
+
+[![](https://mermaid.ink/img/pako:eNpd0MFuwyAMANBfiXxOogKBEA6T1ma37bLdJi6o0CbaEiJGpHVR_n2mUbWpnHjGWLYXOHrrQIEez8FMXfb8qscMz2NWFFVRPGT7P9Pkw-Y9mtyZJ7ebD2h5Z7JLgact0N4KoiGHwYXB9BY7WdK7hti5wWlQeLUmfGjscMU8M0f_dhmPoGKYXQ7Bz-cO1Ml8fqHmyZro2t7gMMMtZTLju_f_CWqBb1BCljWvCGWMSiYla3K4gCJClIIIWlMmWMVYzdccfq4FdqWkksuGM9ZUktfph7N99OFl2-J1mesvpeJbaA?type=png)](https://mermaid.live/edit#pako:eNpd0MFuwyAMANBfiXxOogKBEA6T1ma37bLdJi6o0CbaEiJGpHVR_n2mUbWpnHjGWLYXOHrrQIEez8FMXfb8qscMz2NWFFVRPGT7P9Pkw-Y9mtyZJ7ebD2h5Z7JLgact0N4KoiGHwYXB9BY7WdK7hti5wWlQeLUmfGjscMU8M0f_dhmPoGKYXQ7Bz-cO1Ml8fqHmyZro2t7gMMMtZTLju_f_CWqBb1BCljWvCGWMSiYla3K4gCJClIIIWlMmWMVYzdccfq4FdqWkksuGM9ZUktfph7N99OFl2-J1mesvpeJbaA)
+
+      
+### MST
+
+[![](https://mermaid.ink/img/pako:eNpNkD1vwyAQhv8KuplYAQzGDJGapGOndKpYUCCxlQIWxVITy_-9xFHb3HC699F7H7oJjtE6UKDDOZmhQ-97HVCJF7RaobqkDdo-EbqQ3YNs74Q8k92_51UHwOBd8qa3ZcF0d2jInfNOgyqlNemiy-K5-MyY4-EajqByGh2GFMdzB-pkPr-KGgdrstv3ptzo_-hgwkeM_relSFATfIMSsmp4TShjVDIpWYvhCooIUQkiaEOZYDVjDZ8x3JYB60pSyWXLuRRrwpq2xuBsn2N6e3xnedL8A6MDUs0?type=png)](https://mermaid.live/edit#pako:eNpNkD1vwyAQhv8KuplYAQzGDJGapGOndKpYUCCxlQIWxVITy_-9xFHb3HC699F7H7oJjtE6UKDDOZmhQ-97HVCJF7RaobqkDdo-EbqQ3YNs74Q8k92_51UHwOBd8qa3ZcF0d2jInfNOgyqlNemiy-K5-MyY4-EajqByGh2GFMdzB-pkPr-KGgdrstv3ptzo_-hgwkeM_relSFATfIMSsmp4TShjVDIpWYvhCooIUQkiaEOZYDVjDZ8x3JYB60pSyWXLuRRrwpq2xuBsn2N6e3xnedL8A6MDUs0)
+
+---
+
+### Explanation:
+- The `graph TD` specifies a top-down flowchart.
+- Nodes (like `A`, `B`, `C`, `E`) are connected with edges and their weights (`4`, `2`, `1`) are labeled on the edges. 
+
+You can use this code in any Markdown editor or viewer that supports Mermaid to visualize the graph.
+
+
+## Conclusion
+
+Kruskal's Algorithm efficiently constructs the Minimum Spanning Tree of a graph by:
+- Sorting edges by weight.
+- Iteratively selecting the smallest edge that does not form a cycle.
+
+The MST for the given graph has a total weight of **9**.
+
+### How many ways we can merge the files on optimal merge pattern?
+# Optimal Merge Pattern: Number of Ways to Merge Files
+
+## Introduction
+
+The **Optimal Merge Pattern** is a problem where we need to merge a set of files in the least costly manner. The cost of merging two files is the sum of their sizes, and the goal is to minimize the total cost of all merges.
+
+### Key Concept
+
+- To solve this, we use a **greedy algorithm**.
+- At each step, we merge the two smallest files, as this ensures the minimum cost for that step.
+
+---
+
+## Number of Ways to Merge Files
+
+If there are **n files**, the number of ways to merge them into a single file is given by:
+## Number of Ways to Merge Files
+
+If there are **n files**, the number of ways to merge them into a single file is given by:
+
+C(n-1)
+
+Where C(n-1) is the **(n-1)th Catalan number**. The Catalan number is calculated as:
+
+C(k) = (1 / (k + 1)) * (2k choose k)
+
+Where:
+- (2k choose k) is the binomial coefficient.
+
+---
+
+### Examples
+
+#### 1. **For 2 files (n = 2):**
+C(1) = (1 / (1 + 1)) * (2 choose 1) = (1 / 2) * 2 = 1
+- There is only **1 way** to merge the files.
+
+#### 2. **For 3 files (n = 3):**
+C(2) = (1 / (2 + 1)) * (4 choose 2) = (1 / 3) * 6 = 2
+- There are **2 ways** to merge the files.
+
+#### 3. **For 4 files (n = 4):**
+C(3) = (1 / (3 + 1)) * (6 choose 3) = (1 / 4) * 20 = 5
+- There are **5 ways** to merge the files.
+
+
+- There are **5 ways** to merge the files.
+
+#### General Formula for \( n \) Files:
+The number of ways to merge \( n \) files optimally is given by the Catalan number \( C(n-1) \).
+
+---
+
+## Summary Table for \( n \) Files
+
+| Number of Files (\( n \)) | Number of Ways (\( C(n-1) \)) |
+|---------------------------|-------------------------------|
+| 2                         | 1                             |
+| 3                         | 2                             |
+| 4                         | 5                             |
+| 5                         | 14                            |
+| 6                         | 42                            |
+
+---
+
+## Conclusion
+
+The **Optimal Merge Pattern** uses the greedy approach to minimize the cost of merging files. The number of ways to merge files is directly related to the **Catalan numbers** and grows exponentially with the number of files.
+
+
